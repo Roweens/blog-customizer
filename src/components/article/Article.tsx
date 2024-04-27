@@ -5,8 +5,9 @@ import plane from 'src/images/plane.png';
 import { Text } from 'components/text';
 
 import styles from './Article.module.scss';
+import { memo } from 'react';
 
-export const Article = () => {
+export const Article = memo(() => {
 	return (
 		<article className={clsx(styles.article)}>
 			<Text as='h1' size={45} weight={800} uppercase dynamicLite>
@@ -47,4 +48,6 @@ export const Article = () => {
 			</Text>
 		</article>
 	);
-};
+});
+
+Article.displayName = 'Article';
