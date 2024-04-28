@@ -15,6 +15,25 @@ export type OptionType = {
 	optionClassName?: string;
 };
 
+export type ArticleAppState = {
+	'--bg-color': string;
+	'--container-width': string;
+	'--font-color': string;
+	'--font-family': string;
+	'--font-size': string;
+};
+
+export const MapOptionNameToVariable: Record<
+	keyof ArticleStateType,
+	keyof ArticleAppState
+> = {
+	backgroundColor: '--bg-color',
+	contentWidth: '--container-width',
+	fontColor: '--font-color',
+	fontFamilyOption: '--font-family',
+	fontSizeOption: '--font-size',
+};
+
 export const fontFamilyOptions: OptionType[] & {
 	optionClassName?: FontFamiliesClasses;
 } = [
