@@ -16,7 +16,8 @@ import {
 } from 'src/constants/articleProps';
 import { RadioGroup } from '../radio-group';
 import { Separator } from '../separator';
-import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
+import { useClose } from 'src/hooks/useClose';
+import { Text } from '../text';
 
 interface ArticleParamsFormProps {
 	onSubmit: (newArticleState: ArticleStateType) => void;
@@ -26,13 +27,13 @@ interface ArticleParamsFormProps {
 export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const { onSubmit, onReset } = props;
 
-	const [isOpen, setIsOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
 
-	useOutsideClickClose({
-		isOpen,
-		rootRef,
-		onChange: setIsOpen,
+	useClose({
+		rootRef: rootRef,
+		isOpen: isMenuOpen,
+		onClose: () => setIsMenuOpen(false),
 	});
 
 	const [fontFamily, setFontFamily] = useState(
@@ -77,12 +78,21 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 
 	return (
 		<div ref={rootRef}>
-			<ArrowButton onClick={() => setIsOpen((prev) => !prev)} isOpen={isOpen} />
-			<aside className={clsx(styles.container, isOpen && styles.containerOpen)}>
+			<ArrowButton
+				onClick={() => setIsMenuOpen((prev) => !prev)}
+				isOpen={isMenuOpen}
+			/>
+			<aside
+				className={clsx(styles.container, {
+					[styles.containerOpen]: isMenuOpen,
+				})}>
 				<form
 					className={styles.form}
 					onSubmit={onSubmitHandle}
 					onReset={onResetHandle}>
+					<Text as='h2' size={31} uppercase weight={800}>
+						Задайте параметры
+					</Text>
 					<Select
 						title='Шрифт'
 						selected={fontFamily}
